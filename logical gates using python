@@ -1,0 +1,414 @@
+from tkinter import*
+from tkinter.messagebox import showerror
+class mybuttons:
+# main thing template
+    def __init__(self, root):
+        # for a frame
+
+        self.f=Frame(root, height=600, width=1200,bg = 'light grey')
+        self.f.pack()
+
+        #labels
+
+        self.l1=Label(text='Number 1',font=('Arial',14))
+        self.l2=Label(text='Number 2',font=('Arial',14))
+
+        #create entry widget for entering number
+        self.e1=Entry(self.f, width=25,fg='black',font=('Arial', 14))
+
+        self.e2=Entry(self.f, width=25, fg='black',font=('Arial', 14))
+
+        
+
+        #place labels and entry widgets in the frame
+        self.l1.place(x=50,y=100)
+        self.l2.place(x=500,y=100)
+        self.e1.place(x=150,y=100)
+        self.e2.place(x=600,y=100)
+        # for radio buttons
+        #create intvar class variables
+        self.var = IntVar()
+
+        self.r1=Radiobutton(self.f, bg='white', font=('Arial', 14),
+                            text='AND', variable=self.var, value=1,command =self.choose)
+        self.r2=Radiobutton(self.f, bg='white', font=('Arial', 14),
+                            text='NOT', variable=self.var, value=2,command =self.choose)
+        self.r3=Radiobutton(self.f, bg='white', font=('Arial', 14),
+                            text='OR', variable=self.var, value=3,command =self.choose)
+        self.r4=Radiobutton(self.f, bg='white', font=('Arial', 14),
+                            text='XOR', variable=self.var, value=4,command =self.choose)
+        #displaying the radios
+        self.r1.place(x=50,y=200)
+        self.r2.place(x=250,y=200)
+        self.r3.place(x =500,y =200 )
+        self.r4.place(x = 750,y=200)
+        #for buttons
+        self.b1 = Button(self.f, text="Result", bg ="white",font=('Arial', 14),height=2,command=self.finalans)
+        self.b2 = Button(self.f, text="Explanation",command =self.opennew, bg= "white",font=('Arial', 14),height=2)
+        #displaying the buttons
+        self.b1.place(x=100,y=300)
+        self.b2.place(x=300,y=300)
+        # for result is button
+        self.l3=Label(bg ="white",text='Result ',font=('Arial',14),height =3)
+        self.l4 =Text(bg ="white",state='disabled',height=3,width=25,font=('Arial',14))
+        #displaying the result
+        self.l3.place(x=125,y=400)
+        self.l4.place(x =192,y=400)
+
+       
+    def finalans(self):
+        a = self.e1.get()
+        b = self.e2.get()
+        #for exceptions
+        try:
+            a = int(a)
+    # ValueError is the type of error expected from this conversion
+        except ValueError:
+        #Display Error Window (Title, Prompt)
+            showerror('Non-Int Error', 'Please enter an integer')
+        else:
+            a = int(a)
+            
+        try:
+            b= int(b)
+    # ValueError is the type of error expected from this conversion
+        except ValueError:
+        #Display Error Window (Title, Prompt)
+            showerror('Non-Int Error', 'Please enter an integer')
+        else:
+            b=int(b)
+        
+        x = self.choose1 # automatic value from radio buttons
+        
+        if(x==1):
+            g =a & b
+        elif(x==2):
+            g = ~a
+            
+        
+        elif(x==3):
+            g = a|b
+            
+        else:
+            g =a^b
+            
+    #printing the result
+        self.l4 =Label(bg ="white",text=g,width=25,font=('Arial',14),height=3)  
+        self.l4.place(x =192,y=400)
+        
+   
+        #getting the value from radio button
+    def choose(self):
+        self.choose1 =self.var.get()
+        
+
+        #display the values using labels
+    def opennew(self):
+        x = self.choose1   # from radio buttons
+        
+        if x==1:
+            self.AND()
+        elif x==2:
+            self.NOT()
+        elif x==3:
+            self.OR()
+        else:
+            self.XOR()
+            
+            
+            
+            
+    def AND(self):
+        
+        #starts from here
+        a = self.e1.get()
+        b = self.e2.get()
+        try:
+            a = int(a)
+    # ValueError is the type of error expected from this conversion
+        except ValueError:
+        #Display Error Window (Title, Prompt)
+            showerror('Non-Int Error', 'Please enter an integer')
+        else:
+            a = int(a)
+            
+            
+        try:
+            b= int(b)
+    # ValueError is the type of error expected from this conversion
+        except ValueError:
+        #Display Error Window (Title, Prompt)
+            showerror('Non-Int Error', 'Please enter an integer')
+        else:
+            b=int(b)
+            
+        c = bin(a)  # converting to binary
+        c = c[2:]   #removing 0b if you use bin then 0b is in the first two 
+        d = bin(b)
+        d = d[2:]
+        f = a & b
+        e = bin(f).replace("0b","")   # way to remove 0b
+        m = Tk()
+        m.title("Explanation")
+            
+        ef1=Frame(m, height=600, width=1200,bg = 'light grey')
+        ef1.pack()
+        #for number and binaries
+        fn1=Label(m,bg ="white",text=' Number 1 ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        fn2=Label(m,bg ="white",text=' Number 2 ',font=('Arial',14),height =3,borderwidth=1,relief ="solid",width=9)
+        fn3=Label(m,bg ="white",text=' Binary 1 ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        fn4=Label(m,bg ="white",text=' Binary 2 ',font=('Arial',14),height =3,borderwidth=1,relief ="solid",width=9)
+        # for function
+        fn5 =Label(m,bg ="white",text=' AND ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        # for answer
+        fn6 =Label(m,bg ="white",text=' Decimal Result',font=('Arial',14),height =3,borderwidth=1,relief= "solid",width=25)
+        #for digits
+        fn7  =Label(m,bg ="white",text=a,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn8  =Label(m,bg ="white",text=b,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn9  =Label(m,bg ="white",text=c,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn10 =Label(m,bg ="white",text=d,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn11 =Label(m,bg ="white",text=e,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn12 =Label(m,bg ="white",text=f,height=3,width=30,font=('Arial',14),borderwidth=1,relief="solid")
+        
+        # for displaying results
+        fn1.place(x = 100,y =50)
+        fn2.place(x = 100,y =122)
+        fn3.place(x =500,y =50)
+        fn4.place(x =500,y=122)
+        fn5.place(x = 500,y=210)
+        fn6.place(x=150,y=300)
+        # to print answers
+        fn7.place(x=200,y=50)
+        fn8.place(x=200,y=122)
+        fn9.place(x=600,y=50)
+        fn10.place(x=600,y=122)
+        fn11.place(x=600,y=210)
+        fn12.place(x=500,y=300)
+        m.resizable(0,0)
+        
+        
+        
+        
+        
+    def OR(self):
+#starts from here
+        a = self.e1.get()
+        b = self.e2.get()
+        try:
+            a = int(a)
+    # ValueError is the type of error expected from this conversion
+        except ValueError:
+        #Display Error Window (Title, Prompt)
+            showerror('Non-Int Error', 'Please enter an integer')
+        else:
+            a = int(a)
+            
+        try:
+            b= int(b)
+    # ValueError is the type of error expected from this conversion
+        except ValueError:
+        #Display Error Window (Title, Prompt)
+            showerror('Non-Int Error', 'Please enter an integer')
+        else:
+            b=int(b)
+            
+        c = bin(a)
+        c = c[2:]
+        d = bin(b)
+        d = d[2:]
+        f = a | b
+        e = bin(f).replace("0b","")
+        m = Tk()
+        m.title("Explanation")
+            
+        ef1=Frame(m, height=600, width=1200,bg = 'light grey')
+        ef1.pack()
+        fn1=Label(m,bg ="white",text=' Number 1 ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        fn2=Label(m,bg ="white",text=' Number 2 ',font=('Arial',14),height =3,borderwidth=1,relief ="solid",width=9)
+        fn3=Label(m,bg ="white",text=' Binary 1 ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        fn4=Label(m,bg ="white",text=' Binary 2 ',font=('Arial',14),height =3,borderwidth=1,relief ="solid",width=9)
+        # for function
+        fn5 =Label(m,bg ="white",text=' OR ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        # for answer
+        fn6 =Label(m,bg ="white",text=' Decimal Result',font=('Arial',14),height =3,borderwidth=1,relief= "solid",width=25)
+        #for digits
+        fn7  =Label(m,bg ="white",text=a,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn8  =Label(m,bg ="white",text=b,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn9  =Label(m,bg ="white",text=c,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn10 =Label(m,bg ="white",text=d,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn11 =Label(m,bg ="white",text=e,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn12 =Label(m,bg ="white",text=f,height=3,width=30,font=('Arial',14),borderwidth=1,relief="solid")
+        
+        # for displaying results
+        fn1.place(x = 100,y =50)
+        fn2.place(x = 100,y =122)
+        fn3.place(x =500,y =50)
+        fn4.place(x =500,y=122)
+        fn5.place(x = 500,y=210)
+        fn6.place(x=150,y=300)
+        # to print answers
+        fn7.place(x=200,y=50)
+        fn8.place(x=200,y=122)
+        fn9.place(x=600,y=50)
+        fn10.place(x=600,y=122)
+        fn11.place(x=600,y=210)
+        fn12.place(x=500,y=300)
+        m.resizable(0,0)
+        
+        
+        
+        
+        
+        
+        
+    def XOR(self):
+       #starts from here
+        a = self.e1.get()
+        b = self.e2.get()
+        try:
+            a = int(a)
+    # ValueError is the type of error expected from this conversion
+        except ValueError:
+        #Display Error Window (Title, Prompt)
+            showerror('Non-Int Error', 'Please enter an integer')
+        else:
+            a = int(a)
+            
+        try:
+            b= int(b)
+    # ValueError is the type of error expected from this conversion
+        except ValueError:
+        #Display Error Window (Title, Prompt)
+            showerror('Non-Int Error', 'Please enter an integer')
+        else:
+            b=int(b)
+            
+        c = bin(a)
+        c = c[2:]
+        d = bin(b)
+        d = d[2:]
+        f = a ^ b
+        e = bin(f).replace("0b","")
+        m = Tk()
+        m.title("Explanation")
+            
+        ef1=Frame(m, height=600, width=1200,bg = 'light grey')
+        ef1.pack()
+        fn1=Label(m,bg ="white",text=' Number 1 ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        fn2=Label(m,bg ="white",text=' Number 2 ',font=('Arial',14),height =3,borderwidth=1,relief ="solid",width=9)
+        fn3=Label(m,bg ="white",text=' Binary 1 ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        fn4=Label(m,bg ="white",text=' Binary 2 ',font=('Arial',14),height =3,borderwidth=1,relief ="solid",width=9)
+        # for function
+        fn5 =Label(m,bg ="white",text=' XOR ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        # for answer
+        fn6 =Label(m,bg ="white",text=' Decimal Result',font=('Arial',14),height =3,borderwidth=1,relief= "solid",width=25)
+        #for digits
+        fn7  =Label(m,bg ="white",text=a,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn8  =Label(m,bg ="white",text=b,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn9  =Label(m,bg ="white",text=c,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn10 =Label(m,bg ="white",text=d,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn11 =Label(m,bg ="white",text=e,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn12 =Label(m,bg ="white",text=f,height=3,width=30,font=('Arial',14),borderwidth=1,relief="solid")
+        
+        # for displaying results
+        fn1.place(x = 100,y =50)
+        fn2.place(x = 100,y =122)
+        fn3.place(x =500,y =50)
+        fn4.place(x =500,y=122)
+        fn5.place(x = 500,y=210)
+        fn6.place(x=150,y=300)
+        # to print answers
+        fn7.place(x=200,y=50)
+        fn8.place(x=200,y=122)
+        fn9.place(x=600,y=50)
+        fn10.place(x=600,y=122)
+        fn11.place(x=600,y=210)
+        fn12.place(x=500,y=300)
+        m.resizable(0,0)
+        
+        
+        
+        
+        
+        
+    def NOT(self):
+        a = self.e1.get()
+        b = self.e2.get()
+        try:
+            a = int(a)
+    # ValueError is the type of error expected from this conversion
+        except ValueError:
+        #Display Error Window (Title, Prompt)
+            showerror('Non-Int Error', 'Please enter an integer')
+        else:
+            a = int(a)
+            
+        try:
+            b= int(b)
+    # ValueError is the type of error expected from this conversion
+        except ValueError:
+        #Display Error Window (Title, Prompt)
+            showerror('Non-Int Error', 'Please enter an integer')
+        else:
+            b=int(b)
+# a= dec ,b= dec , c=bin ,d = bin have 0b ,e =not dec a,f =not dec b,g  = after removing 0b from bin ,h same as g
+        c = bin(a)
+        c = c[2:]
+        d = bin(b)
+        d = d[2:]
+        e= ~a
+        f =~b
+        g = bin(e).replace("0b","")
+        h= bin(f).replace("0b","")
+        m= Tk()
+        m.title("Explanation")
+            
+        ef1=Frame(m, height=600, width=1200,bg = 'light grey')
+        ef1.pack()
+        fn1=Label(m,bg ="white",text=' Number 1 ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        fn2=Label(m,bg ="white",text=' Number 2 ',font=('Arial',14),height =3,borderwidth=1,relief ="solid",width=9)
+        fn3=Label(m,bg ="white",text=' Binary 1 ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        fn4=Label(m,bg ="white",text=' Binary 2 ',font=('Arial',14),height =3,borderwidth=1,relief ="solid",width=9)
+        # for function
+        fn5 =Label(m,bg ="white",text=' NOT ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        fn6 =Label(m,bg ="white",text=' NOT ',font=('Arial',14),height =3,borderwidth=1,relief="solid",width=9)
+        # for answer
+        fn7 =Label(m,bg ="white",text=' Decimal Result',font=('Arial',14),height =3,borderwidth=1,relief= "solid",width=25)
+        fn8 =Label(m,bg ="white",text=' Decimal Result',font=('Arial',14),height =3,borderwidth=1,relief= "solid",width=25)
+        #for numbers
+        fn9 =Label(m,bg ="white",text=a,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn10 =Label(m,bg ="white",text=b,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn11 =Label(m,bg ="white",text=c,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn12 =Label(m,bg ="white",text=d,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn13 =Label(m,bg ="white",text=g,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn14 =Label(m,bg ="white",text=h,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn15 =Label(m,bg ="white",text=e,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        fn16=Label(m,bg ="white",text=f,height=3,width=25,font=('Arial',14),borderwidth=1,relief="solid")
+        # for displaying results
+        fn1.place(x = 100,y =50)
+        fn2.place(x = 100,y =122)
+        fn3.place(x =500,y =50)
+        fn4.place(x =500,y=122)
+        fn5.place(x = 500,y=250)
+        fn6.place(x=500,y=350)
+        fn7.place(x=150,y=450)
+        fn8.place(x=150,y=520)
+        #to display results
+        
+        
+        
+        fn9.place(x =200,y=50)
+        fn10.place(x=200,y=122)
+        fn11.place(x=600,y=50)
+        fn12.place(x=600,y=122)
+        fn13.place(x=600,y=250)
+        fn14.place(x=600,y=350)
+        fn15.place(x=400,y=450)
+        fn16.place(x=400,y=520)
+        m.resizable(0,0)
+
+
+root=Tk()
+mb=mybuttons(root)
+root.resizable(0,0)
+root.mainloop()
